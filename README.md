@@ -1,4 +1,4 @@
-![image info](./logo.png)}
+![image info](./logo.png)
 **2005-2024 EN.I / elsemieni**
 
 **Viuals by CesarRP/Netherware Entertainment**
