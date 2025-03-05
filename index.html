@@ -1,0 +1,448 @@
+<!--
+========================================================================
+EN.I RPG Maker message tool v0.7
+2015-2025 by elsemieni/EN.I - elsemieni.net
+========================================================================
+This work is free. You can redistribute it and/or modify it under the
+terms of the Do What The Fuck You Want To Public License, Version 2,
+as published by Sam Hocevar. See https://www.wtfpl.net/ for more details.
+========================================================================
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>EN.I RPG Maker message tool</title>
+    <meta name="identifier-url" content="http://elsemieni.net/rpgmaker/msgtool/"/>
+    <meta name="title" content="EN.I RPG Maker message tool"/>
+    <meta name="description" content="Online tool for formatting messages into RPG Maker more easily."/>
+    <meta name="abstract" content="Online tool for formatting messages into RPG Maker more easily."/>
+    <meta name="keywords"
+          content="RPG Maker, RPG Maker 2000, RPG Maker 2003, RPG Maker XP, RPG Maker VX, RPG Maker VX Ace, message, rm2003, rm2000, tool"/>
+    <meta name="author" content="elsemieni"/>
+    <meta name="revisit-after" content="15"/>
+    <meta name="language" content="EN"/>
+    <meta name="copyright" content="No"/>
+    <meta name="robots" content="All"/>
+    <link rel="stylesheet" type="text/css" href="index.css"/>
+</head>
+
+<body>
+<h1><a href="">EN.I RPG Maker message tool</a></h1>
+<hr/>
+<div id="center" style="text-align:center;display:none">
+    <p>RPG Maker message format:
+        <select autocomplete="off" id="makerSelector" size="1" >
+            <option selected>RPG Maker 2000/2003</option>
+            <option>RPG Maker XP</option>
+            <option>RPG Maker VX/VXAce</option>
+            <option>RPG Maker MV</option>
+            <option>RPG Maker MZ</option>
+        </select>
+        <span style="display: inline-block;"
+              class="">Custom input length</span>
+        <input style="display: inline-block;width: 40px;" id="inputLength" class=""
+               onchange="MsgTool.setCustomInputLength();" type="number" min=1/>
+        <input style="display: inline-block;" id="faceCheckbox" class="button2k buttonVX buttonMV buttonMZ"
+               onchange="MsgTool.faceLimiter();" type="checkbox"/>
+        <span style="display: inline-block;"
+              class="button2k buttonVX buttonMV buttonMZ">Consider a face in the message in the format</span>
+    </p>
+    <p>
+        <textarea id="S1" rows="7" cols="90" onkeyup="MsgTool.checkText()"></textarea>
+    </p>
+    <p>
+        <button style="display: inline-block;" type="button" class="button2k symbol" id="symbolButton"
+                onclick="MsgTool.turnSymbol();">Symbol
+        </button>
+        <button style="display: none;" type="button" class="buttonVX buttonMV buttonMZ icon" id="iconButton"
+                onclick="MsgTool.drawIcon();">Icon
+        </button>
+        <button style="display: inline-block;" type="button" class="button2k buttonXP buttonVX buttonMV buttonMZ slash"
+                id="slashButton"
+                onclick="MsgTool.addSlash();">Slash
+        </button>
+        <button style="display: inline-block;" type="button" class="button2k buttonXP buttonVX buttonMV buttonMZ color"
+                id="colorButton"
+                onclick="MsgTool.turnColor();">Color(*)
+        </button>
+        <button style="display: inline-block;" type="button" class="button2k buttonVX speed" id="speedButton"
+                onclick="MsgTool.addSpeed();">Speed(*)
+        </button>
+        <button style="display: inline-block;" type="button" class="button2k buttonVX buttonMV buttonMZ instxt"
+                id="instantButton"
+                onclick="MsgTool.addInstant();">Instant text(*)
+        </button>
+        <button style="display: inline-block;" type="button"
+                class="button2k buttonXP buttonVX buttonMV buttonMZ variable" id="varButton"
+                onclick="MsgTool.addVar();">Variable
+        </button>
+        <button style="display: inline-block;" type="button"
+                class="button2k buttonXP buttonVX buttonMV buttonMZ heroname" id="heroButton"
+                onclick="MsgTool.addHero();">Hero name
+        </button>
+        <button style="display: none;" type="button" class="buttonVX buttonMV buttonMZ party" id="partyButton"
+                onclick="MsgTool.addPartyMember();">Party member
+        </button>
+        <button style="display: none;" type="button" class="buttonVX buttonMV buttonMZ currency" id="currencyButton"
+                onclick="MsgTool.addCurrency();">Currency unit
+        </button>
+        <button style="display: none;" type="button" class="buttonVX buttonMV buttonMZ plus" id="moreSizeButton"
+                onclick="MsgTool.addMoreSize();">+ Text size
+        </button>
+        <button style="display: none;" type="button" class="buttonVX buttonMV buttonMZ minus" id="lessSizeButton"
+                onclick="MsgTool.addLessSize();">- Text size
+        </button>
+        <button style="display: inline-block;" type="button"
+                class="button2k buttonXP buttonVX buttonMV buttonMZ showmoney"
+                id="moneyButton" onclick="MsgTool.addMoney();">Show money
+        </button>
+        <button style="display: inline-block;" type="button" class="button2k buttonVX buttonMV buttonMZ pause"
+                id="pauseButton"
+                onclick="MsgTool.addPause();">Pause
+        </button>
+        <button style="display: inline-block;" type="button" class="button2k buttonVX buttonMV buttonMZ semipause"
+                id="quarterPauseButton"
+                onclick="MsgTool.addQuartPause();">1/4 sec. pause
+        </button>
+        <button style="display: inline-block;" type="button" class="button2k buttonVX buttonMV buttonMZ secpause"
+                id="fullPauseButton"
+                onclick="MsgTool.addIntPause();">1 sec. pause
+        </button>
+        <button style="display: inline-block;" type="button" class="button2k buttonVX buttonMV buttonMZ vanish"
+                id="endButton"
+                onclick="MsgTool.addEnd();">Instant vanish
+        </button>
+        <button style="display: inline-block;" type="button" class="button2k halfspace" id="halfSpaceButton"
+                onclick="MsgTool.addHalfSpace();">Half space
+        </button>
+        <button style="display: inline-block;" type="button" class="txtsize buttonMZ waitInput" id="addTextSizeButton"
+                onclick="MsgTool.addSetTextSize();">Set text size
+        </button>
+        <button style="display: inline-block;" type="button" class="coord buttonMZ xcoordinate"
+                id="windowXCoordinateButton"
+                onclick="MsgTool.addSetXCoordinate();">Window X coordinate
+        </button>
+        <button style="display: inline-block;" type="button" class="coord buttonMZ ycoordiante"
+                id="windowYCoordinateButton"
+                onclick="MsgTool.addSetYCoordinate();">Window Y coordinate
+        </button>
+    </p>
+    <div id="colorTable" style="display:none">
+        <p>
+            <button type="button" class="button2k buttonVX buttonXP MsgToolButton" id="colorButton0"
+                    onclick="MsgTool.addColor(0);">
+                \c[0]
+            </button>
+            <button type="button" class="button2k buttonVX buttonXP MsgToolButton" id="colorButton1"
+                    onclick="MsgTool.addColor(1);">
+                \c[1]
+            </button>
+            <button type="button" class="button2k buttonVX buttonXP MsgToolButton" id="colorButton2"
+                    onclick="MsgTool.addColor(2);">
+                \c[2]
+            </button>
+            <button type="button" class="button2k buttonVX buttonXP MsgToolButton" id="colorButton3"
+                    onclick="MsgTool.addColor(3);">
+                \c[3]
+            </button>
+            <button type="button" class="button2k buttonVX buttonXP MsgToolButton" id="colorButton4"
+                    onclick="MsgTool.addColor(4);">
+                \c[4]
+            </button>
+            <button type="button" class="button2k buttonVX buttonXP MsgToolButton" id="colorButton5"
+                    onclick="MsgTool.addColor(5);">
+                \c[5]
+            </button>
+            <button type="button" class="button2k buttonVX buttonXP MsgToolButton" id="colorButton6"
+                    onclick="MsgTool.addColor(6);">
+                \c[6]
+            </button>
+            <button type="button" class="button2k buttonVX buttonXP MsgToolButton" id="colorButton7"
+                    onclick="MsgTool.addColor(7);">
+                \c[7]
+            </button>
+            <button type="button" class="button2k buttonVX MsgToolButton" id="colorButton8"
+                    onclick="MsgTool.addColor(8);">\c[8]
+            </button>
+            <button type="button" class="button2k buttonVX MsgToolButton" id="colorButton9"
+                    onclick="MsgTool.addColor(9);">\c[9]
+            </button>
+            <button type="button" class="button2k buttonVX MsgToolButton" id="colorButton10"
+                    onclick="MsgTool.addColor(10);">\c[10]
+            </button>
+            <button type="button" class="button2k buttonVX MsgToolButton" id="colorButton11"
+                    onclick="MsgTool.addColor(11);">\c[11]
+            </button>
+            <button type="button" class="button2k buttonVX MsgToolButton" id="colorButton12"
+                    onclick="MsgTool.addColor(12);">\c[12]
+            </button>
+            <button type="button" class="button2k buttonVX MsgToolButton" id="colorButton13"
+                    onclick="MsgTool.addColor(13);">\c[13]
+            </button>
+            <button type="button" class="button2k buttonVX MsgToolButton" id="colorButton14"
+                    onclick="MsgTool.addColor(14);">\c[14]
+            </button>
+            <button type="button" class="button2k buttonVX MsgToolButton" id="colorButton15"
+                    onclick="MsgTool.addColor(15);">\c[15]
+            </button>
+            <button type="button" class="button2k buttonVX MsgToolButton" id="colorButton16"
+                    onclick="MsgTool.addColor(16);">\c[16]
+            </button>
+            <button type="button" class="button2k buttonVX MsgToolButton" id="colorButton17"
+                    onclick="MsgTool.addColor(17);">\c[17]
+            </button>
+            <button type="button" class="button2k buttonVX MsgToolButton" id="colorButton18"
+                    onclick="MsgTool.addColor(18);">\c[18]
+            </button>
+            <button type="button" class="button2k buttonVX MsgToolButton" id="colorButton19"
+                    onclick="MsgTool.addColor(19);">\c[19]
+            </button>
+            <button type="button" class="buttonVX MsgToolButton" id="colorButton20" onclick="MsgTool.addColor(20);">
+                \c[20]
+            </button>
+            <button type="button" class="buttonVX MsgToolButton" id="colorButton21" onclick="MsgTool.addColor(21);">
+                \c[21]
+            </button>
+            <button type="button" class="buttonVX MsgToolButton" id="colorButton22" onclick="MsgTool.addColor(22);">
+                \c[22]
+            </button>
+            <button type="button" class="buttonVX MsgToolButton" id="colorButton23" onclick="MsgTool.addColor(23);">
+                \c[23]
+            </button>
+            <button type="button" class="buttonVX MsgToolButton" id="colorButton24" onclick="MsgTool.addColor(24);">
+                \c[24]
+            </button>
+            <button type="button" class="buttonVX MsgToolButton" id="colorButton25" onclick="MsgTool.addColor(25);">
+                \c[25]
+            </button>
+            <button type="button" class="buttonVX MsgToolButton" id="colorButton26" onclick="MsgTool.addColor(26);">
+                \c[26]
+            </button>
+            <button type="button" class="buttonVX MsgToolButton" id="colorButton27" onclick="MsgTool.addColor(27);">
+                \c[27]
+            </button>
+            <button type="button" class="buttonVX MsgToolButton" id="colorButton28" onclick="MsgTool.addColor(28);">
+                \c[28]
+            </button>
+            <button type="button" class="buttonVX MsgToolButton" id="colorButton29" onclick="MsgTool.addColor(29);">
+                \c[29]
+            </button>
+            <button type="button" class="buttonVX MsgToolButton" id="colorButton30" onclick="MsgTool.addColor(30);">
+                \c[30]
+            </button>
+            <button type="button" class="buttonVX MsgToolButton" id="colorButton31" onclick="MsgTool.addColor(31);">
+                \c[31]
+            </button>
+        </p>
+    </div>
+    <div id="gTable" style="display:none">
+        <table class="center" border="0">
+            <tbody>
+            <tr>
+                <td>
+                    <div class="symbolButton MsgToolButton" id="symButton0" onclick="MsgTool.addSymbol('$A');">&nbsp;</div>
+                </td>
+                <td>
+                    <div class="symbolButton MsgToolButton" id="symButton1" onclick="MsgTool.addSymbol('$B');">&nbsp;</div>
+                </td>
+                <td>
+                    <div class="symbolButton MsgToolButton" id="symButton2" onclick="MsgTool.addSymbol('$C');">&nbsp;</div>
+                </td>
+                <td>
+                    <div class="symbolButton MsgToolButton" id="symButton3" onclick="MsgTool.addSymbol('$D');">&nbsp;</div>
+                </td>
+                <td>
+                    <div class="symbolButton MsgToolButton" id="symButton4" onclick="MsgTool.addSymbol('$E');">&nbsp;</div>
+                </td>
+                <td>
+                    <div class="symbolButton MsgToolButton" id="symButton5" onclick="MsgTool.addSymbol('$F');">&nbsp;</div>
+                </td>
+                <td>
+                    <div class="symbolButton MsgToolButton" id="symButton6" onclick="MsgTool.addSymbol('$G');">&nbsp;</div>
+                </td>
+                <td>
+                    <div class="symbolButton MsgToolButton" id="symButton7" onclick="MsgTool.addSymbol('$H');">&nbsp;</div>
+                </td>
+                <td>
+                    <div class="symbolButton MsgToolButton" id="symButton8" onclick="MsgTool.addSymbol('$I');">&nbsp;</div>
+                </td>
+                <td>
+                    <div class="symbolButton MsgToolButton" id="symButton9" onclick="MsgTool.addSymbol('$J');">&nbsp;</div>
+                </td>
+                <td>
+                    <div class="symbolButton MsgToolButton" id="symButton10" onclick="MsgTool.addSymbol('$K');">&nbsp;</div>
+                </td>
+                <td>
+                    <div class="symbolButton MsgToolButton" id="symButton11" onclick="MsgTool.addSymbol('$L');">&nbsp;</div>
+                </td>
+                <td>
+                    <div class="symbolButton MsgToolButton" id="symButton12" onclick="MsgTool.addSymbol('$M');">&nbsp;</div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="symbolButton MsgToolButton" id="symButton13" onclick="MsgTool.addSymbol('$N');">&nbsp;</div>
+                </td>
+                <td>
+                    <div class="symbolButton MsgToolButton" id="symButton14" onclick="MsgTool.addSymbol('$O');">&nbsp;</div>
+                </td>
+                <td>
+                    <div class="symbolButton MsgToolButton" id="symButton15" onclick="MsgTool.addSymbol('$P');">&nbsp;</div>
+                </td>
+                <td>
+                    <div class="symbolButton MsgToolButton" id="symButton16" onclick="MsgTool.addSymbol('$Q');">&nbsp;</div>
+                </td>
+                <td>
+                    <div class="symbolButton MsgToolButton" id="symButton17" onclick="MsgTool.addSymbol('$R');">&nbsp;</div>
+                </td>
+                <td>
+                    <div class="symbolButton MsgToolButton" id="symButton18" onclick="MsgTool.addSymbol('$S');">&nbsp;</div>
+                </td>
+                <td>
+                    <div class="symbolButton MsgToolButton" id="symButton19" onclick="MsgTool.addSymbol('$T');">&nbsp;</div>
+                </td>
+                <td>
+                    <div class="symbolButton MsgToolButton" id="symButton20" onclick="MsgTool.addSymbol('$U');">&nbsp;</div>
+                </td>
+                <td>
+                    <div class="symbolButton MsgToolButton" id="symButton21" onclick="MsgTool.addSymbol('$V');">&nbsp;</div>
+                </td>
+                <td>
+                    <div class="symbolButton MsgToolButton" id="symButton22" onclick="MsgTool.addSymbol('$W');">&nbsp;</div>
+                </td>
+                <td>
+                    <div class="symbolButton MsgToolButton" id="symButton23" onclick="MsgTool.addSymbol('$X');">&nbsp;</div>
+                </td>
+                <td>
+                    <div class="symbolButton MsgToolButton" id="symButton24" onclick="MsgTool.addSymbol('$Y');">&nbsp;</div>
+                </td>
+                <td>
+                    <div class="symbolButton MsgToolButton" id="symButton25" onclick="MsgTool.addSymbol('$Z');">&nbsp;</div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="symbolButton MsgToolButton" id="symButton26" onclick="MsgTool.addSymbol('$a');">&nbsp;</div>
+                </td>
+                <td>
+                    <div class="symbolButton MsgToolButton" id="symButton27" onclick="MsgTool.addSymbol('$b');">&nbsp;</div>
+                </td>
+                <td>
+                    <div class="symbolButton MsgToolButton" id="symButton28" onclick="MsgTool.addSymbol('$c');">&nbsp;</div>
+                </td>
+                <td>
+                    <div class="symbolButton MsgToolButton" id="symButton29" onclick="MsgTool.addSymbol('$d');">&nbsp;</div>
+                </td>
+                <td>
+                    <div class="symbolButton MsgToolButton" id="symButton30" onclick="MsgTool.addSymbol('$e');">&nbsp;</div>
+                </td>
+                <td>
+                    <div class="symbolButton MsgToolButton" id="symButton31" onclick="MsgTool.addSymbol('$f');">&nbsp;</div>
+                </td>
+                <td>
+                    <div class="symbolButton MsgToolButton" id="symButton32" onclick="MsgTool.addSymbol('$g');">&nbsp;</div>
+                </td>
+                <td>
+                    <div class="symbolButton MsgToolButton" id="symButton33" onclick="MsgTool.addSymbol('$h');">&nbsp;</div>
+                </td>
+                <td>
+                    <div class="symbolButton MsgToolButton" id="symButton34" onclick="MsgTool.addSymbol('$i');">&nbsp;</div>
+                </td>
+                <td>
+                    <div class="symbolButton MsgToolButton" id="symButton35" onclick="MsgTool.addSymbol('$j');">&nbsp;</div>
+                </td>
+                <td>
+                    <div class="symbolButton MsgToolButton" id="symButton36" onclick="MsgTool.addSymbol('$k');">&nbsp;</div>
+                </td>
+                <td>
+                    <div class="symbolButton MsgToolButton" id="symButton37" onclick="MsgTool.addSymbol('$l');">&nbsp;</div>
+                </td>
+                <td>
+                    <div class="symbolButton MsgToolButton" id="symButton38" onclick="MsgTool.addSymbol('$m');">&nbsp;</div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="symbolButton MsgToolButton" id="symButton39" onclick="MsgTool.addSymbol('$n');">&nbsp;</div>
+                </td>
+                <td>
+                    <div class="symbolButton MsgToolButton" id="symButton40" onclick="MsgTool.addSymbol('$o');">&nbsp;</div>
+                </td>
+                <td>
+                    <div class="symbolButton MsgToolButton" id="symButton41" onclick="MsgTool.addSymbol('$p');">&nbsp;</div>
+                </td>
+                <td>
+                    <div class="symbolButton MsgToolButton" id="symButton42" onclick="MsgTool.addSymbol('$q');">&nbsp;</div>
+                </td>
+                <td>
+                    <div class="symbolButton MsgToolButton" id="symButton43" onclick="MsgTool.addSymbol('$r');">&nbsp;</div>
+                </td>
+                <td>
+                    <div class="symbolButton MsgToolButton" id="symButton44" onclick="MsgTool.addSymbol('$s');">&nbsp;</div>
+                </td>
+                <td>
+                    <div class="symbolButton MsgToolButton" id="symButton45" onclick="MsgTool.addSymbol('$t');">&nbsp;</div>
+                </td>
+                <td>
+                    <div class="symbolButton MsgToolButton" id="symButton46" onclick="MsgTool.addSymbol('$u');">&nbsp;</div>
+                </td>
+                <td>
+                    <div class="symbolButton MsgToolButton" id="symButton47" onclick="MsgTool.addSymbol('$v');">&nbsp;</div>
+                </td>
+                <td>
+                    <div class="symbolButton MsgToolButton" id="symButton48" onclick="MsgTool.addSymbol('$w');">&nbsp;</div>
+                </td>
+                <td>
+                    <div class="symbolButton MsgToolButton" id="symButton49" onclick="MsgTool.addSymbol('$x');">&nbsp;</div>
+                </td>
+                <td>
+                    <div class="symbolButton MsgToolButton" id="symButton50" onclick="MsgTool.addSymbol('$y');">&nbsp;</div>
+                </td>
+                <td>
+                    <div class="symbolButton MsgToolButton" id="symButton51" onclick="MsgTool.addSymbol('$z');">&nbsp;</div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <p>
+        <button class="clean" type="button" id="cleanButton" onclick="MsgTool.cleanText();">Clean</button>
+        <button class="formatxt" type="button" id="convertButton" onclick="MsgTool.adaptText();">Format text (**)
+        </button>
+        <button class="clipboard" type="button" id="clipboardButton" onclick="MsgTool.copyToClipboard();">Copy to
+            clipboard
+        </button>
+    </p>
+    <hr/>
+    <p style="display: inline-block;" class="button2k buttonVX buttonMV buttonMZ back1">
+        Extract colors from custom
+        <span style="display: inline-block;" class="button2k">system</span>
+        <span style="display: none;" class="buttonVX buttonMV buttonMZ">windowskin</span> picture: <input
+            id="systemUpload" type="file"/>
+    </p>
+    <p style="display: inline-block;" class="button2k back2">Extract symbols from custom glyph set: <input
+            id="symbolUpload" type="file"/></p>
+    <hr/>
+    <div id="lengths"><p></p></div>
+    <div id="tooLargeText"><p></p></div>
+    <hr/>
+    <div class="notes">
+        <p>
+            (*): If you select pieces of the text and click with that marked functions, you can surround it with those!
+            (Ex: <i>"<b>hey hello</b> bye"</i> turns into "<i><b>\s[7]hey hello\s[0]</b> bye"</i>).
+            <br/>
+            (**): You can put any text in plain format and the tool will adapt the
+            text to fit in RPG Maker messages (with or without face, depend on your
+            choice).
+        </p>
+    </div>
+
+</div>
+<hr/>
+<address>v0.7 - 2015-2025 by EN.I / elsemieni - <a href="https://elsemieni.net/">elsemieni.net</a> - Visual by CesarRP -
+    Source code at <a href="https://github.com/elsemieni"> Github</a></address>
+<div id=debug></div>
+<script type="text/javascript" src="index.js"></script>
+</body>
+</html>

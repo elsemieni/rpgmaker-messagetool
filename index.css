@@ -1,0 +1,169 @@
+/**
+========================================================================
+EN.I RPG Maker message tool v0.7
+2015-2025 by elsemieni/EN.I - elsemieni.net
+========================================================================
+This work is free. You can redistribute it and/or modify it under the
+terms of the Do What The Fuck You Want To Public License, Version 2,
+as published by Sam Hocevar. See https://www.wtfpl.net/ for more details.
+========================================================================
+ */
+table.center {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+body {
+    background: #d4d0c8;
+    font-family: sans-serif;
+    font-weight: normal;
+    font-size: small;
+    font-variant: normal;
+    font-style: normal;
+    line-height: 150%;
+    text-transform: none;
+    text-indent: 0ex;
+    text-align: center;
+    letter-spacing: normal;
+    word-spacing: 0px;
+    text-decoration: none;
+}
+
+hr {
+    border: #a4a19b 1px solid;
+    border-style: none none solid;
+    width: 100%;
+    margin: 0 auto 0 auto;
+}
+
+h1 a {
+    display: block;
+    margin: 0 auto;
+    background: url("logo.png") no-repeat center;
+    text-indent: -200em;
+    overflow: hidden;
+    width: 425px;
+    height: 50px;
+}
+
+.notes {
+    font-size: x-small;
+}
+
+.back1 {
+    background-color: #e7e7db;
+}
+
+.back2 {
+    background-color: #F7D2FF;
+}
+
+.symbolButton {
+    display: inline-block;
+    height: 24px;
+    width: 24px;
+    cursor: pointer;
+}
+
+.MsgToolButton {
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+/* Icons */
+
+.symbol, .color, .slash, .clipboard, .speed, .instxt, .variable, .heroname, .showmoney, .pause, .semipause, .secpause, .vanish, .halfspace, .clean, .formatxt, .icon, .party, .currency, .plus, .minus, .txtsize, .coord {
+    padding-left: 20px;
+}
+
+.color {
+    background: url("icons/color.png") no-repeat left;
+}
+
+.slash {
+    background: url("icons/slash.png") no-repeat left;
+}
+
+.symbol {
+    background: url("icons/symbol.png") no-repeat left;
+}
+
+.coord {
+    background: url("icons/symbol.png") no-repeat left;
+}
+
+.speed {
+    background: url("icons/speed.png") no-repeat left;
+}
+
+.instxt {
+    background: url("icons/instxt.png") no-repeat left;
+}
+
+.variable {
+    background: url("icons/variable.png") no-repeat left;
+}
+
+.heroname {
+    background: url("icons/heroname.png") no-repeat left;
+}
+
+.showmoney {
+    background: url("icons/showmoney.png") no-repeat left;
+}
+
+.pause {
+    background: url("icons/pause.png") no-repeat left;
+}
+
+.semipause {
+    background: url("icons/semipause.png") no-repeat left;
+}
+
+.secpause {
+    background: url("icons/secpause.png") no-repeat left;
+}
+
+.vanish {
+    background: url("icons/vanish.png") no-repeat left;
+}
+
+.halfspace {
+    background: url("icons/halfspace.png") no-repeat left;
+}
+
+.clean {
+    background: url("icons/clean.png") no-repeat left;
+}
+
+.formatxt {
+    background: url("icons/formatxt.png") no-repeat left;
+}
+
+.txtsize {
+    background: url("icons/formatxt.png") no-repeat left;
+}
+
+.icon {
+    background: url("icons/icon.png") no-repeat left;
+}
+
+.party {
+    background: url("icons/party.png") no-repeat left;
+}
+
+.currency {
+    background: url("icons/currency.png") no-repeat left;
+}
+
+.plus {
+    background: url("icons/plus.png") no-repeat left;
+}
+
+.minus {
+    background: url("icons/minus.png") no-repeat left;
+}
+
+.clipboard {
+    background: url("icons/copy.png") no-repeat left;
+}
